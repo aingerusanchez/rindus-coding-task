@@ -1,0 +1,17 @@
+/* Color palette */
+:root {
+  color-scheme: light dark;
+
+  --color-primary: #3f51b5;
+  --color-accent: #0a9a8d;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #121212;
+    color: #fff;
+
+    // --color-primary: #0a9a8d;
+    // --color-accent: #3f51b5;
+  }
+}

@@ -1,0 +1,33 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+// Available color palettes: https://material.io/design/color/
+@use "@angular/material" as mat;
+@include mat.core();
+
+// Light theme
+$rindus-light-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: mat.define-palette(mat.$indigo-palette),
+      accent: mat.define-palette(mat.$teal-palette),
+    ),
+  )
+);
+
+// Dark theme
+$rindus-dark-theme: mat.define-dark-theme(
+  (
+    color: (
+      primary: mat.define-palette(mat.$pink-palette),
+      accent: mat.define-palette(mat.$blue-grey-palette),
+    ),
+  )
+);
+
+// Light theme by default
+@include mat.all-component-themes($rindus-light-theme);
+
+// Apply the dark theme only when the user prefers dark themes.
+@media (prefers-color-scheme: dark) {
+  @include mat.all-component-themes($rindus-dark-theme);
+}
