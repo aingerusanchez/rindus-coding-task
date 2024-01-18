@@ -2,16 +2,26 @@
 :root {
   color-scheme: light dark;
 
-  --color-primary: #3f51b5;
-  --color-accent: #0a9a8d;
+  background-color: #d9d9d9;
+
+  --primary: #3f51b5;
+  --primary-contrast: #fff;
+  --accent: #0a9a8d;
+  --accent-contrast: #fff;
+
+  --text-color: #000;
 }
 
 @media (prefers-color-scheme: dark) {
   body {
-    background-color: #121212;
+    background-color: #303140;
     color: #fff;
 
-    // --color-primary: #0a9a8d;
-    // --color-accent: #3f51b5;
+    --primary: #0a9a8d;
+    --primary-contrast: #fff;
+    --accent: #3f51b5;
+    --accent-contrast: #fff;
+
+    --text-color: #fff;
   }
 }
