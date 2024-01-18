@@ -1,2 +1,28 @@
-<h1>Role selector</h1>
+<section class="container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Role selector</mat-card-title>
+      <mat-card-subtitle>Select your employee role</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-button-toggle-group
+        [(ngModel)]="role"
+        name="roleSelector"
+        aria-label="Role selector"
+      >
+        <mat-button-toggle value="user">
+          <mat-icon>account_circle</mat-icon>
+          User
+        </mat-button-toggle>
+        <mat-button-toggle value="admin">
+          <mat-icon>shield_person</mat-icon>
+          Admin
+        </mat-button-toggle>
+      </mat-button-toggle-group>
 
+      <div class="submit-button">
+        <button mat-raised-button color="accent">Enter</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</section>

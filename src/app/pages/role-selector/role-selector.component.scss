@@ -1,0 +1,44 @@
+@use "sass:map";
+@use "@angular/material" as mat;
+
+:host {
+  display: grid;
+  place-items: center;
+}
+
+mat-card {
+  width: clamp(300px, 90vw, 500px);
+  box-sizing: border-box;
+  text-align: center;
+
+  mat-card-header {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 12px;
+  }
+
+  mat-card-content {
+    mat-button-toggle-group {
+      width: 100%;
+
+      mat-button-toggle {
+        color: var(--text);
+        width: 200px;
+        width: clamp(100px, 50%, 50%);
+
+        &.mat-button-toggle-checked {
+          background-color: var(--primary);
+          color: var(--primary-contrast);
+        }
+      }
+    }
+
+    .submit-button {
+      margin-top: 2rem;
+
+      button {
+        width: 100%;
+      }
+    }
+  }
+}
