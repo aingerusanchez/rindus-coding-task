@@ -1,0 +1,30 @@
+<section>
+  <form id="search-form" [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="outline">
+      <mat-label for="search-input">{{ placeholder }}</mat-label>
+      <input
+        id="search-input"
+        matInput
+        formControlName="query"
+        type="search"
+        [placeholder]="placeholder"
+      />
+      <mat-hint
+        align="start"
+        [ngClass]="{
+        'success': (query?.dirty || query?.touched) && !query?.errors?.['minlength'] && query?.value,
+        'invalid': (query?.dirty || query?.touched) && query?.errors?.['minlength'],
+      }"
+      >
+        <em>Enter at least 3 characters</em>
+      </mat-hint>
+      <mat-error
+        *ngIf="query?.invalid && (query?.dirty || query?.touched) && submitted"
+      >
+        <span *ngIf="query?.errors?.['minlength']">
+          Enter at least 3 characters
+        </span>
+      </mat-error>
+    </mat-form-field>
+  </form>
+</section>
