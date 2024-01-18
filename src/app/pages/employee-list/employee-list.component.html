@@ -1,1 +1,5 @@
-<p>employee-list works!</p>
+<app-searchbar
+  #searchbar
+  placeholder="Search by name or username"
+  (onSearch)="onSearch($any($event.target).value)"
+/>

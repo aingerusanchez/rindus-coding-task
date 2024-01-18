@@ -27,6 +27,7 @@ export class RoleService {
   private initRole() {
     const role = localStorage.getItem('role');
     if (role) {
+      this.role.set(role as Role);
       this.#router.navigateByUrl('employee-list');
     } else {
       this.#router.navigateByUrl('role-selector');
