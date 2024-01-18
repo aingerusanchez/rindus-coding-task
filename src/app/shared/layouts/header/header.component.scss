@@ -1,0 +1,10 @@
+:host {
+  position: fixed;
+  top: 0;
+  width: 100vw;
+}
+
+mat-toolbar {
+  display: flex;
+  justify-content: space-between;
+}
