@@ -1,14 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
 // Angular Material
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+// Services
+import { RoleService } from '@core/services/role.service';
 // Models
 import { Role } from '@core/models';
-import { RoleService } from '@core/services/role.service';
 
 @Component({
   selector: 'app-role-selector',
@@ -27,6 +29,7 @@ import { RoleService } from '@core/services/role.service';
 })
 export class RoleSelectorComponent {
   #roleService = inject(RoleService);
+  #router = inject(Router);
 
   userRole: Role = 'user';
 
@@ -34,5 +37,6 @@ export class RoleSelectorComponent {
     if (!this.userRole) return;
 
     this.#roleService.setRole(this.userRole);
+    this.#router.navigate(['employee-list']);
   }
 }
