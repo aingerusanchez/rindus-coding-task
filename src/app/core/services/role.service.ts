@@ -1,9 +1,12 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
+import { Router } from '@angular/router';
 // Models
 import { Role } from '@core/models';
 
 @Injectable({ providedIn: 'root' })
 export class RoleService {
+  #router = inject(Router);
+
   role = signal<Role | undefined>(undefined);
 
   constructor() {
@@ -18,9 +21,15 @@ export class RoleService {
   logout() {
     this.role.set(undefined);
     localStorage.removeItem('role');
+    this.#router.navigate(['role-selector']);
   }
 
   private initRole() {
-    localStorage.getItem('role');
+    const role = localStorage.getItem('role');
+    if (role) {
+      this.#router.navigateByUrl('employee-list');
+    } else {
+      this.#router.navigateByUrl('role-selector');
+    }
   }
 }
