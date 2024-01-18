@@ -6,7 +6,7 @@
     </mat-card-header>
     <mat-card-content>
       <mat-button-toggle-group
-        [(ngModel)]="role"
+        [(ngModel)]="userRole"
         name="roleSelector"
         aria-label="Role selector"
       >
@@ -21,7 +21,14 @@
       </mat-button-toggle-group>
 
       <div class="submit-button">
-        <button mat-raised-button color="accent">Enter</button>
+        <button
+          mat-raised-button
+          type="submit"
+          color="accent"
+          (click)="enter()"
+        >
+          Enter
+        </button>
       </div>
     </mat-card-content>
   </mat-card>

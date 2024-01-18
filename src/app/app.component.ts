@@ -4,7 +4,7 @@ import { RouterOutlet } from '@angular/router';
 // Environment
 import { environment as env } from '@env/environment.development';
 // Services
-import { AuthService } from '@core/services/auth.service';
+import { RoleService } from '@core/services/role.service';
 // Components
 import { HeaderComponent } from '@shared/layouts/header/header.component';
 
@@ -17,7 +17,7 @@ import { HeaderComponent } from '@shared/layouts/header/header.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
-  #auth = inject(AuthService);
+  #auth = inject(RoleService);
 
   title: string = env.title;
 
