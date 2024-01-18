@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { CanActivateFn } from '@angular/router';
 
-import { roleGuard } from './has-role.guard';
+import { roleGuard } from './role.guard';
 
 describe('roleGuard', () => {
   const executeGuard: CanActivateFn = (...guardParameters) =>

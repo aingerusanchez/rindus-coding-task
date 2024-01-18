@@ -25,12 +25,11 @@ export class RoleService {
   }
 
   private initRole() {
-    const role = localStorage.getItem('role');
-    if (role) {
+    const role = localStorage.getItem('role') as Role;
+
+    if (role === 'user' || role === 'admin') {
       this.role.set(role as Role);
-      this.#router.navigateByUrl('employee-list');
-    } else {
-      this.#router.navigateByUrl('role-selector');
+      // this.#router.navigateByUrl('employee-list');
     }
   }
 }
