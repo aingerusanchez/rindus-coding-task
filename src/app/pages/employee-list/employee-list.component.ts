@@ -2,12 +2,12 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 // Angular Material
 import { MatListModule } from '@angular/material/list';
 // Components
-import { SearchbarComponent } from '@shared/components/searchbar/searchbar.component';
+import { SearchBarComponent } from '@shared/components/search-bar/search-bar.component';
 
 @Component({
   selector: 'app-employee-list',
   standalone: true,
-  imports: [MatListModule, SearchbarComponent],
+  imports: [MatListModule, SearchBarComponent],
   templateUrl: './employee-list.component.html',
   styleUrl: './employee-list.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

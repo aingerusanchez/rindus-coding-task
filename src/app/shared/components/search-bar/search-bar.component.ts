@@ -22,7 +22,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 const QUERY_MIN_LENGTH = 3;
 
 @Component({
-  selector: 'app-searchbar',
+  selector: 'app-search-bar',
   standalone: true,
   imports: [
     CommonModule,
@@ -32,11 +32,11 @@ const QUERY_MIN_LENGTH = 3;
     MatIconModule,
     MatAutocompleteModule,
   ],
-  templateUrl: './searchbar.component.html',
-  styleUrl: './searchbar.component.scss',
+  templateUrl: './search-bar.component.html',
+  styleUrl: './search-bar.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SearchbarComponent {
+export class SearchBarComponent {
   @Input() placeholder: string = 'Search';
   @Output() search: EventEmitter<string> = new EventEmitter<string>();
 
