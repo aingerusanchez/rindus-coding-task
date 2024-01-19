@@ -8,7 +8,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 // Services
-import { RoleService } from '@core/services/role.service';
+import { RoleService } from '@core/services/role/role.service';
 // Models
 import { Role } from '@core/models';
 

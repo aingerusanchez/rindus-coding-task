@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { RoleService } from '@core/services/role.service';
+import { RoleService } from '@core/services/role/role.service';
 import { NotificationsService } from '@shared/services/notifications-service.service';
 
 export const roleGuard: CanActivateFn = () => {

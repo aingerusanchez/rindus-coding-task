@@ -4,7 +4,7 @@ import { RouterOutlet } from '@angular/router';
 // Environment
 import { environment as env } from '@env/environment.development';
 // Services
-import { RoleService } from '@core/services/role.service';
+import { RoleService } from '@core/services/role/role.service';
 // Components
 import { HeaderComponent } from '@shared/layouts/header/header.component';
 
