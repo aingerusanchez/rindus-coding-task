@@ -1,5 +1,9 @@
 :host {
   margin: 24px;
+
+  @media screen and (max-width: 400px) {
+    margin: 16px;
+  }
 }
 
 app-search-bar {
