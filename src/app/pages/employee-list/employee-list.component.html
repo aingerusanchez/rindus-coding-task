@@ -1,5 +1,7 @@
 <app-search-bar
   #searchbar
   placeholder="Search by name or username"
-  (onSearch)="onSearch($any($event.target).value)"
+  [hint]="searchHint()"
+  (type)="onSearchChange($event)"
 />
+<!-- [options]="['Both', 'Name', 'Surname']" -->
