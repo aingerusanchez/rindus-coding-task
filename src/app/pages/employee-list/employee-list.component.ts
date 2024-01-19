@@ -1,53 +1,88 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
-  OnInit,
+  ViewChild,
+  computed,
   inject,
   signal,
 } from '@angular/core';
 // Angular Material
-import { MatListModule } from '@angular/material/list';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import {
+  MatPaginator,
+  MatPaginatorModule,
+  PageEvent,
+} from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+// Service
 import { EmployeeApiService } from '@core/services/employee-api/employee-api.service';
+import { EmployeeService } from './employee.service';
 // Components
 import { SearchBarComponent } from '@shared/components/search-bar/search-bar.component';
-// import { interval } from 'rxjs';
+// Pipes
+import { AgePipe } from '@shared/pipes/age.pipe';
+// Models
+import { Employee } from '@core/models';
 
 const SEARCH_MIN_CHARS = 3;
+const DEFAULT_ITEMS_PER_PAGE = 10;
 
 @Component({
   selector: 'app-employee-list',
   standalone: true,
-  imports: [MatListModule, SearchBarComponent],
+  imports: [
+    MatTableModule,
+    MatSort,
+    MatPaginator,
+    MatPaginatorModule,
+    SearchBarComponent,
+    AgePipe,
+  ],
   templateUrl: './employee-list.component.html',
   styleUrl: './employee-list.component.scss',
-  providers: [EmployeeApiService],
+  providers: [EmployeeApiService, EmployeeService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EmployeeListComponent implements OnInit {
-  #employeeApiService = inject(EmployeeApiService);
+export class EmployeeListComponent implements AfterViewInit {
+  private employeesService = inject(EmployeeService);
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   searchHint = signal('Enter at least 3 characters');
+  #employees = this.employeesService.filteredEmployeesSignal;
+  employeesDataSource = computed(
+    () => new MatTableDataSource<Employee>(this.#employees())
+  );
+  displayedColumns: string[] = ['avatar', 'name', 'surname', 'birthDate'];
+  currentPage = signal<number>(1);
+  itemsPerPage = signal<number>(DEFAULT_ITEMS_PER_PAGE);
 
-  ngOnInit(): void {
-    /* const interval$ = interval(1000);
-    let seconds = 0;
-    // Subscribe to the observable to consume its values
-    interval$.subscribe(() => {
-      seconds++;
-      console.log(seconds); // Output the emitted value
-    }); */
-    this.#employeeApiService.getAll().subscribe(console.table);
+  constructor() {}
+
+  ngAfterViewInit() {
+    this.employeesDataSource().paginator = this.paginator;
+    this.employeesDataSource().sort = this.sort;
   }
 
   onSearchChange(query: string) {
+    const searchText = query.trim().length;
     // Search text must have at least ${SEARCH_MIN_CHARS} characters
-    if (query.trim().length < SEARCH_MIN_CHARS) {
+    if (searchText < SEARCH_MIN_CHARS) {
       this.searchHint.set(`Enter at least ${SEARCH_MIN_CHARS} characters`);
       // Clean filtered data
+      this.employeesService.resetFilter();
       return;
     }
 
     this.searchHint.set('');
     console.log('query:', query);
+
+    this.employeesService.filterByNameOrSurname(query);
+  }
+
+  handlePageChange(pageEvent: PageEvent) {
+    console.log('handlePageChange: ', pageEvent);
   }
 }

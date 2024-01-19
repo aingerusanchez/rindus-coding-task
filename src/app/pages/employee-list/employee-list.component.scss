@@ -2,6 +2,36 @@
   margin: 24px;
 }
 
-app-searchbar {
-  // margin: 12px;
+app-search-bar {
+  display: block;
+  margin-bottom: 2rem;
+}
+
+table[mat-table] {
+  th {
+    background: var(--primary);
+    color: var(--primary-contrast);
+
+    &:first-child {
+      border-top-left-radius: 8px;
+    }
+
+    &:last-child {
+      border-top-right-radius: 8px;
+    }
+  }
+
+  .avatar {
+    width: 50px;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    margin: 4px 0;
+  }
+
+  background: transparent;
+  border-radius: 8px;
+}
+
+mat-paginator {
+  background: transparent;
 }
