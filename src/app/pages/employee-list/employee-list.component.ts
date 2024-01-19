@@ -10,7 +10,7 @@ import { MatListModule } from '@angular/material/list';
 import { EmployeeApiService } from '@core/services/employee-api/employee-api.service';
 // Components
 import { SearchBarComponent } from '@shared/components/search-bar/search-bar.component';
-import { interval } from 'rxjs';
+// import { interval } from 'rxjs';
 
 const SEARCH_MIN_CHARS = 3;
 
@@ -36,7 +36,7 @@ export class EmployeeListComponent implements OnInit {
       seconds++;
       console.log(seconds); // Output the emitted value
     }); */
-    this.#employeeApiService.getAll().subscribe(console.log);
+    this.#employeeApiService.getAll().subscribe(console.table);
   }
 
   onSearchChange(query: string) {
