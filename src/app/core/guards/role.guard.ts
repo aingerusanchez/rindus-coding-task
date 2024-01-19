@@ -9,7 +9,10 @@ export const roleGuard: CanActivateFn = () => {
   if (role === 'user' || role === 'admin') {
     return true;
   } else {
-    inject(NotificationsService).showSnackBar('You must select a valid role');
+    inject(NotificationsService).showSnackBar(
+      'You must select a valid role',
+      'gpp_bad'
+    );
     return inject(Router).navigateByUrl('role-selector');
   }
 };
