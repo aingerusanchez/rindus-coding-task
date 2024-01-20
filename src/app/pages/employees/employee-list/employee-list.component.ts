@@ -28,6 +28,7 @@ import { AgePipe } from '@shared/pipes/age.pipe';
 // Models
 import { Employee } from '@core/models';
 import { RoleService } from '@core/services/role/role.service';
+import { Router } from '@angular/router';
 
 const SEARCH_MIN_CHARS = 3;
 const DEFAULT_ITEMS_PER_PAGE = 10;
@@ -54,6 +55,7 @@ const DEFAULT_ITEMS_PER_PAGE = 10;
 })
 export class EmployeeListComponent /* implements AfterViewInit */ {
   private employeesService = inject(EmployeeService);
+  private router = inject(Router);
   roleService = inject(RoleService);
 
   // @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -94,6 +96,7 @@ export class EmployeeListComponent /* implements AfterViewInit */ {
 
   viewEmployeeDetails(employee: Employee) {
     console.log(employee);
+    this.router.navigate(['employees', employee.id]);
   }
 
   /* handlePageChange(pageEvent: PageEvent) {
