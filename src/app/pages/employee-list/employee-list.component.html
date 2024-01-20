@@ -39,7 +39,12 @@
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  <tr
+    mat-row
+    [ngClass]="{ touchable: roleService.role() === 'admin' }"
+    *matRowDef="let row; columns: displayedColumns"
+    (click)="viewEmployeeDetails(row)"
+  ></tr>
 </table>
 
 @if(loading()) {
@@ -48,6 +53,8 @@
   </mat-progress-spinner>
 </mat-card>
 }
+<!-- itemsPerPage(): {{ itemsPerPage() }} <br /> -->
+<!-- currentPage(): {{ currentPage() }} -->
 
 <!-- <mat-paginator
   [pageSize]="itemsPerPage()"

@@ -25,6 +25,16 @@ table[mat-table] {
     }
   }
 
+  // Touchable row when user has admin role
+  .mat-mdc-row.touchable {
+    cursor: pointer;
+
+    &:hover {
+      background: var(--accent);
+      color: var(--accent-contrast);
+    }
+  }
+
   .avatar {
     width: 50px;
     aspect-ratio: 1/1;

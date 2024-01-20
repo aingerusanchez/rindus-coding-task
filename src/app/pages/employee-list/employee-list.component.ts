@@ -7,6 +7,7 @@ import {
   inject,
   signal,
 } from '@angular/core';
+import { CommonModule } from '@angular/common';
 // Angular Material
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -26,6 +27,7 @@ import { SearchBarComponent } from '@shared/components/search-bar/search-bar.com
 import { AgePipe } from '@shared/pipes/age.pipe';
 // Models
 import { Employee } from '@core/models';
+import { RoleService } from '@core/services/role/role.service';
 
 const SEARCH_MIN_CHARS = 3;
 const DEFAULT_ITEMS_PER_PAGE = 10;
@@ -34,6 +36,7 @@ const DEFAULT_ITEMS_PER_PAGE = 10;
   selector: 'app-employee-list',
   standalone: true,
   imports: [
+    CommonModule,
     MatTableModule,
     // MatPaginator,
     // MatPaginatorModule,
@@ -51,6 +54,7 @@ const DEFAULT_ITEMS_PER_PAGE = 10;
 })
 export class EmployeeListComponent /* implements AfterViewInit */ {
   private employeesService = inject(EmployeeService);
+  roleService = inject(RoleService);
 
   // @ViewChild(MatPaginator) paginator!: MatPaginator;
   // @ViewChild(MatSort) sort!: MatSort;
@@ -86,6 +90,10 @@ export class EmployeeListComponent /* implements AfterViewInit */ {
 
     this.searchHint.set('');
     this.employeesService.filterByNameOrSurname(query);
+  }
+
+  viewEmployeeDetails(employee: Employee) {
+    console.log(employee);
   }
 
   /* handlePageChange(pageEvent: PageEvent) {
