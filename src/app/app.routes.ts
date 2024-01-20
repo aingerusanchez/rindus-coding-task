@@ -1,6 +1,8 @@
 import { Routes } from '@angular/router';
 // Guards
 import { roleGuard } from '@core/guards';
+// Components
+import { EmployeesComponent } from './pages/employees/employees.component';
 
 export const routes: Routes = [
   {
@@ -13,6 +15,7 @@ export const routes: Routes = [
   },
   {
     path: 'employees',
+    component: EmployeesComponent,
     canActivate: [roleGuard],
     children: [
       {
