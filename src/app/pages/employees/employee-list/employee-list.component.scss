@@ -11,7 +11,15 @@
 
 app-search-bar {
   display: block;
-  margin-bottom: 2rem;
+  &.bm {
+    margin-bottom: 2rem;
+  }
+}
+
+.admin-buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 16px;
 }
 
 table[mat-table] {

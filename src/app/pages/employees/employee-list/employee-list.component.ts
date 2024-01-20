@@ -10,6 +10,8 @@ import {
 import { CommonModule } from '@angular/common';
 // Angular Material
 import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 // import {
@@ -37,6 +39,8 @@ const DEFAULT_ITEMS_PER_PAGE = 10;
   standalone: true,
   imports: [
     CommonModule,
+    MatButtonModule,
+    MatIconModule,
     MatTableModule,
     // MatPaginator,
     // MatPaginatorModule,
@@ -93,10 +97,9 @@ export class EmployeeListComponent /* implements AfterViewInit */ {
     this.employeesService.filterByNameOrSurname(query);
   }
 
-  viewEmployeeDetails(employee: Employee) {
-    if (this.roleService.isAdmin()) {
-      this.router.navigate(['employees', employee.id], { state: { employee } });
-    }
+  navigateToEmployeeDetails(employee?: Employee) {
+    const employeeId = employee?.id ?? 0;
+    this.router.navigate(['employees', employeeId], { state: { employee } });
   }
 
   /* handlePageChange(pageEvent: PageEvent) {

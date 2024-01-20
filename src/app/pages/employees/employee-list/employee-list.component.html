@@ -2,9 +2,24 @@
   #searchbar
   placeholder="Search by name or username"
   [hint]="searchHint()"
+  [ngClass]="{ bm: !roleService.isAdmin() }"
   (type)="onSearchChange($event)"
 />
 <!-- [options]="['Both', 'Name', 'Surname']" -->
+
+@if (roleService.isAdmin()) {
+<section class="admin-buttons">
+  <button
+    mat-raised-button
+    color="accent"
+    class="create-button"
+    (click)="navigateToEmployeeDetails()"
+  >
+    <mat-icon>add</mat-icon>
+    Create new
+  </button>
+</section>
+}
 
 <table mat-table [dataSource]="employeesDataSource()!" class="mat-elevation-z8">
   <!-- Avatar -->
@@ -43,7 +58,7 @@
     mat-row
     [ngClass]="{ touchable: roleService.isAdmin() }"
     *matRowDef="let row; columns: displayedColumns"
-    (click)="viewEmployeeDetails(row)"
+    (click)="navigateToEmployeeDetails(row)"
   ></tr>
 </table>
 
