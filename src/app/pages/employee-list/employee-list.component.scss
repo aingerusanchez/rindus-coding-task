@@ -30,8 +30,9 @@ table[mat-table] {
     cursor: pointer;
 
     &:hover {
-      background: var(--accent);
-      color: var(--accent-contrast);
+      background: var(--medium);
+      color: var(--text-color);
+      font-weight: bold;
     }
   }
 

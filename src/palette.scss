@@ -2,13 +2,14 @@
 :root {
   color-scheme: light dark;
 
-  background-color: #d9d9d9;
+  background-color: #f5f5f5;
 
   --primary: #3f51b5;
   --primary-contrast: #fff;
   --accent: #0a9a8d;
   --accent-contrast: #fff;
 
+  --medium: #d9d9d9;
   --text-color: #000;
 }
 
@@ -22,6 +23,7 @@
     --accent: #3f51b5;
     --accent-contrast: #fff;
 
+    --medium: #92949c;
     --text-color: #fff;
   }
 }
