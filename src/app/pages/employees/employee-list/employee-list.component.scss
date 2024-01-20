@@ -1,8 +1,11 @@
 :host {
-  margin: 24px;
+  display: block;
+  max-width: 1024px;
+  margin: auto;
+  padding: 24px;
 
   @media screen and (max-width: 400px) {
-    margin: 16px;
+    padding: 16px;
   }
 }
 
