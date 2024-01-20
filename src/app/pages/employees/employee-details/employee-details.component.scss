@@ -1,0 +1,54 @@
+@import "../../../../styles.scss";
+
+:host {
+  display: grid;
+  place-items: center;
+  max-width: 1024px;
+  height: 100%;
+  margin: auto;
+  padding: 24px;
+
+  @media screen and (max-width: 400px) {
+    padding: 16px;
+  }
+}
+
+.employee-card {
+  display: grid;
+  place-items: center;
+  background: transparent;
+  padding: 24px;
+  width: min-content;
+
+  @media screen and (max-width: 400px) {
+    padding: 12px;
+  }
+
+  .avatar {
+    img {
+      @extend .circle;
+      width: 150px;
+      aspect-ratio: 1/1;
+      box-shadow: 0px 0px 10px var(--medium);
+    }
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+
+    mat-form-field {
+      margin-bottom: 1rem;
+    }
+
+    .submit-button {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+
+      button {
+        width: 100%;
+      }
+    }
+  }
+}

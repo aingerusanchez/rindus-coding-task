@@ -1,1 +1,51 @@
-<p>employee-details works!</p>
+<mat-card class="employee-card">
+  <div class="avatar">
+    <img [src]="avatar?.value" alt="Employee picture" />
+  </div>
+
+  <h2>
+    {{ name ? (fullName(formEmployee.value) | titlecase) : "New employee" }}
+  </h2>
+
+  <!-- <div>form: {{ formEmployee.value | json }}</div> -->
+
+  <form [formGroup]="formEmployee" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="outline">
+      <mat-label for="name"> Name </mat-label>
+      <input matInput formControlName="name" placeholder="John" />
+      <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+      <mat-hint>Hint</mat-hint>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label for="surname"> Surname </mat-label>
+      <input matInput formControlName="surname" placeholder="Doe" />
+      <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+      <mat-hint>Hint</mat-hint>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label for="birthDate"> Birthdate </mat-label>
+      <input matInput formControlName="birthDate" placeholder="DD/MM/YYYY" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label for="position"> Position </mat-label>
+      <mat-select formControlName="position">
+        @for (position of ['senior', 'junior', 'other']; track $index) {
+        <mat-option [value]="position">
+          {{ position | titlecase }}
+        </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <div class="submit-button">
+      <button
+        mat-raised-button
+        color="accent"
+        type="submit"
+        [disabled]="formEmployee.invalid"
+      >
+        Save
+      </button>
+    </div>
+  </form>
+</mat-card>

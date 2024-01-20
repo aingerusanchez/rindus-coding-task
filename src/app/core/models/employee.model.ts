@@ -16,3 +16,7 @@ export interface Employee {
    */
   altPos?: string;
 }
+
+export function fullName(employee: Employee): string {
+  return `${employee.name} ${employee.surname}`;
+}
