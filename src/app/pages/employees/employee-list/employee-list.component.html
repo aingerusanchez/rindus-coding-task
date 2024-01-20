@@ -28,7 +28,7 @@
     <td mat-cell *matCellDef="let employee">
       <img
         class="avatar"
-        src="https://i.pravatar.cc/150?img={{ employee.id % 70 }}"
+        [src]="employee.avatar"
         alt="{{ employee.name }} avatar"
         [title]="employee.name"
       />
