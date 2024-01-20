@@ -36,6 +36,15 @@ table[mat-table] {
   border-radius: 8px;
 }
 
+.loading-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 32px 0;
+  background: transparent;
+  margin-bottom: 12px;
+}
+
 mat-paginator {
   background: transparent;
 }

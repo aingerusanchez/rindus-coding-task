@@ -6,8 +6,6 @@
 />
 <!-- [options]="['Both', 'Name', 'Surname']" -->
 
-@if(employeesDataSource()) {
-
 <table mat-table [dataSource]="employeesDataSource()!" class="mat-elevation-z8">
   <!-- Avatar -->
   <ng-container matColumnDef="avatar">
@@ -44,14 +42,19 @@
   <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 </table>
 
-<mat-paginator
-  [pageSize]="itemsPerPage"
+@if(loading()) {
+<mat-card class="loading-card">
+  <mat-progress-spinner color="primary" mode="indeterminate">
+  </mat-progress-spinner>
+</mat-card>
+}
+
+<!-- <mat-paginator
+  [pageSize]="itemsPerPage()"
   [pageSizeOptions]="[5, 10, 20]"
-  [pageIndex]="currentPage"
+  [pageIndex]="currentPage()"
   [length]="employeesDataSource()!.data.length"
   showFirstLastButtons
   aria-label="Select page of users"
   (page)="handlePageChange($event)"
-></mat-paginator>
-
-} @else {NO DATA}
+></mat-paginator> -->

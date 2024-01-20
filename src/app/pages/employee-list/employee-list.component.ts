@@ -1,20 +1,22 @@
 import {
-  AfterViewInit,
+  // AfterViewInit,
   ChangeDetectionStrategy,
   Component,
-  ViewChild,
+  // ViewChild,
   computed,
   inject,
   signal,
 } from '@angular/core';
 // Angular Material
+import { MatCardModule } from '@angular/material/card';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import {
-  MatPaginator,
-  MatPaginatorModule,
-  PageEvent,
-} from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
+// import {
+//   MatPaginator,
+//   MatPaginatorModule,
+//   PageEvent,
+// } from '@angular/material/paginator';
+// import { MatSort, MatSortModule } from '@angular/material/sort';
 // Service
 import { EmployeeApiService } from '@core/services/employee-api/employee-api.service';
 import { EmployeeService } from './employee.service';
@@ -33,9 +35,12 @@ const DEFAULT_ITEMS_PER_PAGE = 10;
   standalone: true,
   imports: [
     MatTableModule,
-    MatSort,
-    MatPaginator,
-    MatPaginatorModule,
+    // MatPaginator,
+    // MatPaginatorModule,
+    // MatSort,
+    // MatSortModule,
+    MatCardModule,
+    MatProgressSpinnerModule,
     SearchBarComponent,
     AgePipe,
   ],
@@ -44,11 +49,11 @@ const DEFAULT_ITEMS_PER_PAGE = 10;
   providers: [EmployeeApiService, EmployeeService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EmployeeListComponent implements AfterViewInit {
+export class EmployeeListComponent /* implements AfterViewInit */ {
   private employeesService = inject(EmployeeService);
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
+  // @ViewChild(MatPaginator) paginator!: MatPaginator;
+  // @ViewChild(MatSort) sort!: MatSort;
 
   searchHint = signal('Enter at least 3 characters');
   #employees = this.employeesService.filteredEmployeesSignal;
@@ -58,14 +63,17 @@ export class EmployeeListComponent implements AfterViewInit {
   displayedColumns: string[] = ['avatar', 'name', 'surname', 'birthDate'];
   currentPage = signal<number>(1);
   itemsPerPage = signal<number>(DEFAULT_ITEMS_PER_PAGE);
+  loading = this.employeesService.loading;
 
   constructor() {}
 
-  ngAfterViewInit() {
+  /* ngAfterViewInit() {
     this.employeesDataSource().paginator = this.paginator;
     this.employeesDataSource().sort = this.sort;
+    console.log('paginator: ', this.paginator);
+    console.log('sort: ', this.sort);
   }
-
+ */
   onSearchChange(query: string) {
     const searchText = query.trim().length;
     // Search text must have at least ${SEARCH_MIN_CHARS} characters
@@ -77,12 +85,10 @@ export class EmployeeListComponent implements AfterViewInit {
     }
 
     this.searchHint.set('');
-    console.log('query:', query);
-
     this.employeesService.filterByNameOrSurname(query);
   }
 
-  handlePageChange(pageEvent: PageEvent) {
+  /* handlePageChange(pageEvent: PageEvent) {
     console.log('handlePageChange: ', pageEvent);
-  }
+  } */
 }

@@ -1,10 +1,14 @@
+import { Injectable } from '@angular/core';
+// RxJs
 import { Observable, delay, of } from 'rxjs';
 // Mock data
 import { MOCK_DATA } from './employee-mock.data';
+// Models
 import { Employee } from '@core/models';
 
 const LOADING_TIME_MILI_SECONDS = 3000;
 
+@Injectable()
 export class EmployeeApiService {
   constructor() {}
 

@@ -1,6 +1,6 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 // RxJs
-import { first } from 'rxjs';
+import { finalize, first } from 'rxjs';
 // Services
 import { EmployeeApiService } from '@core/services/employee-api/employee-api.service';
 // Models
@@ -8,21 +8,28 @@ import { Employee } from '@core/models';
 
 @Injectable()
 export class EmployeeService {
+  #employeesApi = inject(EmployeeApiService);
   #employeeSignal = signal<Employee[]>([]);
   filteredEmployeesSignal = signal<Employee[]>([]);
 
-  constructor(private employeesApi: EmployeeApiService) {
+  loading = signal(false);
+
+  constructor() {
     this.loadEmployees();
   }
 
   loadEmployees() {
-    this.employeesApi
+    this.loading.set(true);
+    this.#employeesApi
       .getAll()
-      .pipe(first())
+      .pipe(
+        first(),
+        finalize(() => this.loading.set(false))
+      )
       .subscribe({
         next: (employees: Employee[]) => {
-          const employeesSlice = employees.splice(0, 10);
-          console.table(employeesSlice);
+          const employeesSlice = employees.splice(0, 20);
+          // console.table(employeesSlice);
           this.#employeeSignal.set(employeesSlice);
           this.filteredEmployeesSignal.set(employeesSlice);
         },
@@ -47,6 +54,8 @@ export class EmployeeService {
   }
 
   resetFilter() {
+    this.loading.set(true);
     this.filteredEmployeesSignal.set(this.#employeeSignal());
+    this.loading.set(false);
   }
 }
