@@ -37,6 +37,6 @@ export class RoleSelectorComponent {
     if (!this.userRole) return;
 
     this.#roleService.setRole(this.userRole);
-    this.#router.navigate(['employee-list']);
+    this.#router.navigate(['employees']);
   }
 }

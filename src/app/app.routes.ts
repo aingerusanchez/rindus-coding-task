@@ -12,13 +12,26 @@ export const routes: Routes = [
       ),
   },
   {
-    title: 'Employee list',
-    path: 'employee-list',
-    loadComponent: () =>
-      import('./pages/employee-list/employee-list.component').then(
-        (m) => m.EmployeeListComponent
-      ),
+    path: 'employees',
     canActivate: [roleGuard],
+    children: [
+      {
+        title: 'Employee list',
+        path: '',
+        loadComponent: () =>
+          import(
+            './pages/employees/employee-list/employee-list.component'
+          ).then((m) => m.EmployeeListComponent),
+      },
+      {
+        title: 'Employee details',
+        path: ':id',
+        loadComponent: () =>
+          import(
+            './pages/employees/employee-details/employee-details.component'
+          ).then((m) => m.EmployeeDetailsComponent),
+      },
+    ],
   },
   {
     path: '',
