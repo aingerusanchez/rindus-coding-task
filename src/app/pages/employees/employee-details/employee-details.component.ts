@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  signal,
+} from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-employee-details',
@@ -8,4 +14,13 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   styleUrl: './employee-details.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EmployeeDetailsComponent {}
+export class EmployeeDetailsComponent {
+  employee = signal({});
+
+  constructor() {
+    const employee =
+      inject(Router).getCurrentNavigation()?.extras.state?.['employee'];
+    this.employee.set(employee);
+    console.log('data: ', this.employee());
+  }
+}

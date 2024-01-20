@@ -19,8 +19,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 // } from '@angular/material/paginator';
 // import { MatSort, MatSortModule } from '@angular/material/sort';
 // Service
-import { EmployeeApiService } from '@core/services/employee-api/employee-api.service';
-import { EmployeeService } from './employee.service';
+import { EmployeeService } from '../employee.service';
 // Components
 import { SearchBarComponent } from '@shared/components/search-bar/search-bar.component';
 // Pipes
@@ -50,7 +49,6 @@ const DEFAULT_ITEMS_PER_PAGE = 10;
   ],
   templateUrl: './employee-list.component.html',
   styleUrl: './employee-list.component.scss',
-  providers: [EmployeeApiService, EmployeeService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EmployeeListComponent /* implements AfterViewInit */ {
@@ -80,6 +78,7 @@ export class EmployeeListComponent /* implements AfterViewInit */ {
     console.log('sort: ', this.sort);
   }
  */
+
   onSearchChange(query: string) {
     const searchText = query.trim().length;
     // Search text must have at least ${SEARCH_MIN_CHARS} characters
@@ -95,8 +94,9 @@ export class EmployeeListComponent /* implements AfterViewInit */ {
   }
 
   viewEmployeeDetails(employee: Employee) {
-    console.log(employee);
-    this.router.navigate(['employees', employee.id]);
+    if (this.roleService.isAdmin()) {
+      this.router.navigate(['employees', employee.id], { state: { employee } });
+    }
   }
 
   /* handlePageChange(pageEvent: PageEvent) {

@@ -15,7 +15,6 @@ export class EmployeeService {
   loading = signal(false);
 
   constructor() {
-    console.log('CONSTRUCTOR DE EmployeeService');
     this.loadEmployees();
   }
 
