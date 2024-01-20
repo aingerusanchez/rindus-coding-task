@@ -41,7 +41,7 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr
     mat-row
-    [ngClass]="{ touchable: roleService.role() === 'admin' }"
+    [ngClass]="{ touchable: roleService.isAdmin() }"
     *matRowDef="let row; columns: displayedColumns"
     (click)="viewEmployeeDetails(row)"
   ></tr>
