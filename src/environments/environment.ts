@@ -8,7 +8,7 @@ export const environment = {
       maxChars: 20,
     },
     position: {
-      options: ['Senior', 'Junior', 'Other'],
+      options: ['Junior', 'Senior', 'Other'],
     },
   },
 };
