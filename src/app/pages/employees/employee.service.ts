@@ -64,14 +64,13 @@ export class EmployeeService {
     this.loading.set(false);
   }
 
-  createEmployee(newEmployee: Employee) {
+  create(newEmployee: Employee) {
     newEmployee.id = this.#employeeSignal().length + 1;
 
     this.#employeeSignal.update((employees) => [newEmployee, ...employees]);
-    console.log(this.#employeeSignal());
   }
 
-  updateEmployee(updatedEmployee: Employee) {
+  update(updatedEmployee: Employee) {
     const index = this.#employeeSignal().findIndex(
       (emp: Employee) => emp.id === updatedEmployee.id
     );
@@ -79,7 +78,20 @@ export class EmployeeService {
     if (index > -1) {
       this.#employeeSignal.update((employees) => {
         employees.splice(index, 1, updatedEmployee);
-        return employees;
+        return [...employees];
+      });
+    }
+  }
+
+  delete(employeeToDelete: Employee) {
+    const index = this.#employeeSignal().findIndex(
+      (emp: Employee) => emp.id === employeeToDelete.id
+    );
+
+    if (index > -1) {
+      this.#employeeSignal.update((employees) => {
+        employees.splice(index, 1);
+        return [...employees];
       });
     }
   }

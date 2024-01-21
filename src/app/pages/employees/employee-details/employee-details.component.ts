@@ -137,10 +137,10 @@ export class EmployeeDetailsComponent {
 
     if (this.employee.id > -1) {
       // Update existing employee
-      this.employeeService.updateEmployee(employee);
+      this.employeeService.update(employee);
     } else {
       // Create new employee
-      this.employeeService.createEmployee(employee);
+      this.employeeService.create(employee);
     }
     this.router.navigate(['employees']);
   }
