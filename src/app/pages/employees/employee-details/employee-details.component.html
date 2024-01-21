@@ -14,21 +14,17 @@
     </h2>
   </section>
 
-  <div>form: {{ formEmployee.value | json }}</div>
-  <br />
-  <!-- <div>name: {{ formEmployee. | json }}</div> -->
+  <!-- <div>form: {{ formEmployee.value | json }}</div> -->
 
   <form [formGroup]="formEmployee" (ngSubmit)="onSubmit()">
     <mat-form-field appearance="outline">
       <mat-label for="name"> Name </mat-label>
       <input #nameInput matInput formControlName="name" placeholder="John" />
-      <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
       <mat-icon matSuffix>
-        <!-- todo: fix -->
         {{
           name?.invalid && name?.touched
-            ? "sentiment_very_satisfied"
-            : "sentiment_very_dissatisfied"
+            ? "sentiment_very_dissatisfied"
+            : "sentiment_very_satisfied"
         }}
       </mat-icon>
       <mat-hint
@@ -42,15 +38,13 @@
         #surnameInput
         matInput
         formControlName="surname"
-        placeholder="Doe"
+        placeholder="Smith"
       />
       <mat-icon matSuffix>
-        <!-- todo: fix -->
         {{
-          surnameInput.value.length > nameMinChars &&
-          surnameInput.value.length < nameMaxChars
-            ? "sentiment_very_satisfied"
-            : "sentiment_very_dissatisfied"
+          surname?.invalid && surname?.touched
+            ? "sentiment_very_dissatisfied"
+            : "sentiment_very_satisfied"
         }}
       </mat-icon>
       <mat-hint
