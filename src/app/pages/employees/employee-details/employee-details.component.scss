@@ -13,41 +13,66 @@
   }
 }
 
-.employee-card {
+.card {
   display: grid;
   place-items: center;
   background: transparent;
   padding: 24px;
-  width: min-content;
+  width: 100%;
 
   @media screen and (max-width: 400px) {
     padding: 12px;
   }
 
-  .avatar {
-    img {
-      @extend .circle;
-      width: 150px;
-      aspect-ratio: 1/1;
-      box-shadow: 0px 0px 10px var(--medium);
+  .card-header {
+    height: 220px;
+
+    .avatar {
+      display: flex;
+      justify-content: center;
+
+      img {
+        @extend .circle;
+        width: 150px;
+        aspect-ratio: 1/1;
+        box-shadow: 0px 0px 10px var(--medium);
+      }
+    }
+
+    .name {
+      margin: 8px auto;
+      display: flex;
+      justify-content: center;
     }
   }
 
   form {
+    width: 100%;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
 
     mat-form-field {
-      margin-bottom: 1rem;
+      width: max(300px, 48%);
     }
 
-    .submit-button {
+    input {
+      padding-top: 4px;
+    }
+
+    mat-hint {
+      font-size: 0.7rem;
+    }
+
+    .form-buttons {
       width: 100%;
       display: flex;
       justify-content: center;
 
       button {
-        width: 100%;
+        width: min(300px, 100%);
       }
     }
   }

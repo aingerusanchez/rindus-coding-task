@@ -1,26 +1,48 @@
-<mat-card class="employee-card">
-  <div class="avatar">
-    <img [src]="avatar?.value" alt="Employee picture" />
-  </div>
-
-  <h2>
-    {{ name ? (fullName(formEmployee.value) | titlecase) : "New employee" }}
-  </h2>
+<mat-card class="card">
+  <section class="card-header">
+    <div class="avatar">
+      <img [src]="avatar?.value" alt="Employee picture" />
+    </div>
+    <h2 class="name">
+      {{ name ? (fullName(formEmployee.value) | titlecase) : "New employee" }}
+    </h2>
+  </section>
 
   <!-- <div>form: {{ formEmployee.value | json }}</div> -->
 
   <form [formGroup]="formEmployee" (ngSubmit)="onSubmit()">
     <mat-form-field appearance="outline">
       <mat-label for="name"> Name </mat-label>
-      <input matInput formControlName="name" placeholder="John" />
-      <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-      <mat-hint>Hint</mat-hint>
+      <input #nameInput matInput formControlName="name" placeholder="John" />
+      <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
+      <mat-icon matSuffix>
+        {{
+          nameInput.value.length > nameMinChars &&
+          nameInput.value.length < nameMaxChars
+            ? "sentiment_very_satisfied"
+            : "sentiment_very_dissatisfied"
+        }}
+      </mat-icon>
+      <mat-hint
+        >Name must have between {{ nameMinChars }} and
+        {{ nameMaxChars }} characters</mat-hint
+      >
     </mat-form-field>
     <mat-form-field appearance="outline">
       <mat-label for="surname"> Surname </mat-label>
       <input matInput formControlName="surname" placeholder="Doe" />
-      <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-      <mat-hint>Hint</mat-hint>
+      <mat-icon matSuffix>
+        {{
+          nameInput.value.length > nameMinChars &&
+          nameInput.value.length < nameMaxChars
+            ? "sentiment_very_satisfied"
+            : "sentiment_very_dissatisfied"
+        }}
+      </mat-icon>
+      <mat-hint
+        >Surname must have between {{ nameMinChars }} and
+        {{ nameMaxChars }} characters</mat-hint
+      >
     </mat-form-field>
     <mat-form-field appearance="outline">
       <mat-label for="birthDate"> Birthdate </mat-label>
@@ -37,7 +59,7 @@
       </mat-select>
     </mat-form-field>
 
-    <div class="submit-button">
+    <div class="form-buttons">
       <button
         mat-raised-button
         color="accent"

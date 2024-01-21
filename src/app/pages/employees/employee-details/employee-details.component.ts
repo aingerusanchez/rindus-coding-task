@@ -16,11 +16,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 // Models
 import { Employee, fullName } from '@core/models';
+// Environment
+import { environment as env } from '@env/environment';
 
 const NEW_EMPLOYEE: Employee = {
   id: 0,
-  avatar:
-    'https://pixabay.com/get/g75b6ef02758cbb2b51e207e57325b3dcca6588584044ad5ba89a423e1512a846382e1b890992b9062b73e8d320b0e1b1.svg',
+  avatar: 'assets/images/avatar.svg',
   name: '',
   surname: '',
   email: '',
@@ -56,6 +57,8 @@ const NEW_EMPLOYEE: Employee = {
 })
 export class EmployeeDetailsComponent {
   fullName = fullName;
+  nameMinChars = env.employeeForm.name.minChars;
+  nameMaxChars = env.employeeForm.name.maxChars;
 
   formEmployee: FormGroup = new FormGroup({});
 
@@ -93,8 +96,8 @@ export class EmployeeDetailsComponent {
   private initForm(employee: Employee) {
     const nameValidators: Validators[] = [
       Validators.required,
-      Validators.minLength(3),
-      Validators.maxLength(20),
+      Validators.minLength(this.nameMinChars),
+      Validators.maxLength(this.nameMaxChars),
     ];
 
     this.formEmployee = this.fb.group({
