@@ -56,7 +56,12 @@
   <ng-container matColumnDef="actions">
     <th mat-header-cell *matHeaderCellDef>Actions</th>
     <td mat-cell *matCellDef="let employee">
-      <button mat-icon-button color="warn" aria-label="Delete employee">
+      <button
+        mat-icon-button
+        color="warn"
+        aria-label="Delete employee"
+        (click)="deleteEmployee($event, employee)"
+      >
         <mat-icon>delete</mat-icon>
       </button>
     </td>

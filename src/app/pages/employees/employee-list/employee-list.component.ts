@@ -80,7 +80,6 @@ export class EmployeeListComponent implements OnInit {
     if (this.roleService.isAdmin()) {
       this.displayedColumns = [...this.displayedColumns, 'actions'];
     }
-    console.log('ngoninit');
   }
 
   /* ngAfterViewInit() {
@@ -109,6 +108,13 @@ export class EmployeeListComponent implements OnInit {
     if (!this.roleService.isAdmin()) return;
     const employeeId = employee?.id ?? -1;
     this.router.navigate(['employees', employeeId], { state: { employee } });
+  }
+
+  deleteEmployee(event: Event, employee: Employee) {
+    event.stopPropagation();
+
+    if (!this.roleService.isAdmin()) return;
+    this.employeesService.delete(employee);
   }
 
   /* handlePageChange(pageEvent: PageEvent) {
