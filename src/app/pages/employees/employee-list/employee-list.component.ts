@@ -98,6 +98,7 @@ export class EmployeeListComponent /* implements AfterViewInit */ {
   }
 
   navigateToEmployeeDetails(employee?: Employee) {
+    if (!this.roleService.isAdmin()) return;
     const employeeId = employee?.id ?? 0;
     this.router.navigate(['employees', employeeId], { state: { employee } });
   }
