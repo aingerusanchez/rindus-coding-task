@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
   standalone: true,
 })
 export class AgePipe implements PipeTransform {
-  transform(value: string /* , ...args: unknown[] */): string {
+  transform(value?: string /* , ...args: unknown[] */): string {
     if (!value) return '';
 
     const today = new Date();
@@ -18,6 +18,11 @@ export class AgePipe implements PipeTransform {
     ) {
       age--;
     }
-    return age.toString();
+    if (Number.isNaN(age)) {
+      console.error('Malformed date, can`t calculate age', value);
+      return '';
+    } else {
+      return age.toString();
+    }
   }
 }
