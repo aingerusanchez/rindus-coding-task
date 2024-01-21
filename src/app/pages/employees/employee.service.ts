@@ -63,4 +63,24 @@ export class EmployeeService {
     this.setFilter('');
     this.loading.set(false);
   }
+
+  createEmployee(newEmployee: Employee) {
+    newEmployee.id = this.#employeeSignal().length + 1;
+
+    this.#employeeSignal.update((employees) => [newEmployee, ...employees]);
+    console.log(this.#employeeSignal());
+  }
+
+  updateEmployee(updatedEmployee: Employee) {
+    const index = this.#employeeSignal().findIndex(
+      (emp: Employee) => emp.id === updatedEmployee.id
+    );
+
+    if (index > -1) {
+      this.#employeeSignal.update((employees) => {
+        employees.splice(index, 1, updatedEmployee);
+        return employees;
+      });
+    }
+  }
 }

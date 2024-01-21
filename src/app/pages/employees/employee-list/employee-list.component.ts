@@ -94,12 +94,12 @@ export class EmployeeListComponent /* implements AfterViewInit */ {
     }
 
     this.searchHint.set('');
-    this.employeesService.filterByNameOrSurname(query);
+    this.employeesService.setFilter(query);
   }
 
   navigateToEmployeeDetails(employee?: Employee) {
     if (!this.roleService.isAdmin()) return;
-    const employeeId = employee?.id ?? 0;
+    const employeeId = employee?.id ?? -1;
     this.router.navigate(['employees', employeeId], { state: { employee } });
   }
 
