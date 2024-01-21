@@ -2,12 +2,14 @@ import {
   // AfterViewInit,
   ChangeDetectionStrategy,
   Component,
+  OnInit,
   // ViewChild,
   computed,
   inject,
   signal,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 // Angular Material
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -22,14 +24,13 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 // import { MatSort, MatSortModule } from '@angular/material/sort';
 // Service
 import { EmployeeService } from '../employee.service';
+import { RoleService } from '@core/services/role/role.service';
 // Components
 import { SearchBarComponent } from '@shared/components/search-bar/search-bar.component';
 // Pipes
 import { AgePipe } from '@shared/pipes/age.pipe';
 // Models
 import { Employee } from '@core/models';
-import { RoleService } from '@core/services/role/role.service';
-import { Router } from '@angular/router';
 
 const SEARCH_MIN_CHARS = 3;
 const DEFAULT_ITEMS_PER_PAGE = 10;
@@ -55,7 +56,7 @@ const DEFAULT_ITEMS_PER_PAGE = 10;
   styleUrl: './employee-list.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EmployeeListComponent /* implements AfterViewInit */ {
+export class EmployeeListComponent implements OnInit {
   private employeesService = inject(EmployeeService);
   private router = inject(Router);
   roleService = inject(RoleService);
@@ -74,6 +75,13 @@ export class EmployeeListComponent /* implements AfterViewInit */ {
   loading = this.employeesService.loading;
 
   constructor() {}
+
+  ngOnInit(): void {
+    if (this.roleService.isAdmin()) {
+      this.displayedColumns = [...this.displayedColumns, 'actions'];
+    }
+    console.log('ngoninit');
+  }
 
   /* ngAfterViewInit() {
     this.employeesDataSource().paginator = this.paginator;
