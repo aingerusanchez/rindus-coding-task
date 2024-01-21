@@ -115,7 +115,7 @@ import { MatMenuModule } from '@angular/material/menu';
         // }
 
         mat-hint {
-          margin: 6px 0 0 32px;
+          margin-top: 6px;
           font-size: 0.8rem;
         }
       }
