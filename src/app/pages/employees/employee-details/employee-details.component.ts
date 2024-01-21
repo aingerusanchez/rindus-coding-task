@@ -5,7 +5,9 @@ import { Router } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import {
   FormBuilder,
+  FormControl,
   FormGroup,
+  FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
@@ -14,34 +16,29 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-// Models
-import { Employee, fullName } from '@core/models';
 // Environment
 import { environment as env } from '@env/environment';
+// Models
+import { Employee, Position, fullName } from '@core/models';
+// Pipes
+import { AgePipe } from '@shared/pipes/age.pipe';
+import { EmployeeService } from '../employee.service';
+import { capitalize } from '../../../shared/utils/string.utils';
 
-const NEW_EMPLOYEE: Employee = {
-  id: 0,
-  avatar: 'assets/images/avatar.svg',
-  name: '',
-  surname: '',
-  email: '',
-  birthDate: '',
-  position: 'Junior',
-};
-
-/* interface EmployeeForm {
-  name: FormControl<string>;
-  surname: FormControl<string>;
-  birthDate: FormControl<string>;
-  position: FormControl<string>;
-  altPos: FormControl<string>;
-} */
+interface EmployeeForm {
+  name: FormControl<string | null>;
+  surname: FormControl<string | null>;
+  birthDate: FormControl<string | null>;
+  position: FormControl<string | null>;
+  altPos: FormControl<string | null>;
+}
 
 @Component({
   selector: 'app-employee-details',
   standalone: true,
   imports: [
     CommonModule,
+    FormsModule,
     ReactiveFormsModule,
     // Angular Material
     MatCardModule,
@@ -50,17 +47,35 @@ const NEW_EMPLOYEE: Employee = {
     MatSelectModule,
     MatButtonModule,
     MatIconModule,
+    // Pipes
+    AgePipe,
   ],
   templateUrl: './employee-details.component.html',
   styleUrl: './employee-details.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EmployeeDetailsComponent {
+  private employeeService = inject(EmployeeService);
+  private router = inject(Router);
   fullName = fullName;
   nameMinChars = env.employeeForm.name.minChars;
   nameMaxChars = env.employeeForm.name.maxChars;
+  positionOptions: string[] = env.employeeForm.position.options;
+  employee: Employee;
 
-  formEmployee: FormGroup = new FormGroup({});
+  nameValidators = [
+    Validators.required,
+    Validators.minLength(this.nameMinChars),
+    Validators.maxLength(this.nameMaxChars),
+  ];
+
+  formEmployee: FormGroup<EmployeeForm> = this.fb.group({
+    name: ['', [...this.nameValidators]],
+    surname: ['', [...this.nameValidators]],
+    birthDate: ['', Validators.required],
+    position: [env.employeeForm.position.options[0], Validators.required],
+    altPos: [''],
+  });
 
   get name() {
     return this.formEmployee.get('name');
@@ -70,43 +85,60 @@ export class EmployeeDetailsComponent {
     return this.formEmployee.get('surname');
   }
 
-  get avatar() {
-    return this.formEmployee.get('avatar');
+  get birthDate() {
+    return this.formEmployee.get('birthDate');
+  }
+
+  get position() {
+    return this.formEmployee.get('position');
   }
 
   constructor(private fb: FormBuilder) {
     // Load employee data
-    let employee =
+    this.employee =
       inject(Router).getCurrentNavigation()?.extras.state?.['employee'];
-    console.log('employee: ', employee);
+    console.log('employee: ', this.employee);
 
-    if (!employee?.id) employee = NEW_EMPLOYEE; // Init new employee
-
-    // Init form with employee data
-    this.initForm(employee);
-  }
-
-  onSubmit() {
-    if (this.formEmployee.valid) {
-      // const { name, surname, birthDate, position, altPos } = this.employeeForm.value;
-      console.log('Employee form: ', this.formEmployee.value);
+    if (this.employee?.id > -1) {
+      this.formEmployee.patchValue(this.employee);
+    } else {
+      this.employee = {
+        id: -1,
+        name: '',
+        surname: '',
+        email: '',
+        birthDate: '',
+        position: this.positionOptions[0] as Position,
+        altPos: '',
+        avatar: 'assets/images/avatar.svg',
+      };
     }
   }
 
-  private initForm(employee: Employee) {
-    const nameValidators: Validators[] = [
-      Validators.required,
-      Validators.minLength(this.nameMinChars),
-      Validators.maxLength(this.nameMaxChars),
-    ];
+  onSubmit() {
+    if (this.formEmployee.invalid) return;
 
-    this.formEmployee = this.fb.group({
-      name: [employee.name, [...nameValidators]],
-      surname: [employee.surname, [...nameValidators]],
-      avatar: [employee.avatar],
-      birthDate: [employee.birthDate, Validators.required],
-      position: [employee.position, Validators.required],
-      altPos: [employee.altPos],
-    });
+    const { name, surname, birthDate, position, altPos } =
+      this.formEmployee.value;
+    const employee: Employee = {
+      id: this.employee.id,
+      name: capitalize(name!.trim()),
+      surname: capitalize(surname!.trim()),
+      email: this.employee.email ?? '',
+      birthDate: birthDate!,
+      position: position! as Position,
+      altPos: altPos!,
+      avatar: this.employee.avatar,
+    };
+    console.log('Employee form: ', employee);
+
+    if (this.employee.id > -1) {
+      // Update existing employee
+      this.employeeService.updateEmployee(employee);
+    } else {
+      // Create new employee
+      this.employeeService.createEmployee(employee);
+    }
+    this.router.navigate(['employees']);
   }
 }

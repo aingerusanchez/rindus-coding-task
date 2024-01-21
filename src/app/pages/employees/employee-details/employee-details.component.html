@@ -1,14 +1,24 @@
 <mat-card class="card">
   <section class="card-header">
     <div class="avatar">
-      <img [src]="avatar?.value" alt="Employee picture" />
+      <img [src]="employee.avatar" alt="Employee picture" />
     </div>
-    <h2 class="name">
-      {{ name ? (fullName(formEmployee.value) | titlecase) : "New employee" }}
+    <h2 class="summary">
+      <!-- {{
+        name?.value
+          ? (fullName(formEmployee.value) | titlecase)
+          : "New employee "
+      }}
+
+      @if (birthDate?.value && (birthDate?.value | age)) {
+      <span class="age"> ({{ birthDate?.value | age }}) </span>
+      } -->
     </h2>
   </section>
 
-  <!-- <div>form: {{ formEmployee.value | json }}</div> -->
+  <div>form: {{ formEmployee.value | json }}</div>
+  <br />
+  <!-- <div>name: {{ formEmployee. | json }}</div> -->
 
   <form [formGroup]="formEmployee" (ngSubmit)="onSubmit()">
     <mat-form-field appearance="outline">
@@ -17,8 +27,7 @@
       <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
       <mat-icon matSuffix>
         {{
-          nameInput.value.length > nameMinChars &&
-          nameInput.value.length < nameMaxChars
+          name?.invalid && name?.touched
             ? "sentiment_very_satisfied"
             : "sentiment_very_dissatisfied"
         }}
@@ -30,11 +39,16 @@
     </mat-form-field>
     <mat-form-field appearance="outline">
       <mat-label for="surname"> Surname </mat-label>
-      <input matInput formControlName="surname" placeholder="Doe" />
+      <input
+        #surnameInput
+        matInput
+        formControlName="surname"
+        placeholder="Doe"
+      />
       <mat-icon matSuffix>
         {{
-          nameInput.value.length > nameMinChars &&
-          nameInput.value.length < nameMaxChars
+          surnameInput.value.length > nameMinChars &&
+          surnameInput.value.length < nameMaxChars
             ? "sentiment_very_satisfied"
             : "sentiment_very_dissatisfied"
         }}
@@ -51,7 +65,7 @@
     <mat-form-field appearance="outline">
       <mat-label for="position"> Position </mat-label>
       <mat-select formControlName="position">
-        @for (position of ['senior', 'junior', 'other']; track $index) {
+        @for (position of positionOptions; track $index) {
         <mat-option [value]="position">
           {{ position | titlecase }}
         </mat-option>

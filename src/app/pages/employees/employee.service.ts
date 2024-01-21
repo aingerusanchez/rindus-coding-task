@@ -1,4 +1,4 @@
-import { Injectable, inject, signal } from '@angular/core';
+import { Injectable, computed, inject, signal } from '@angular/core';
 // RxJs
 import { finalize, first } from 'rxjs';
 // Services
@@ -10,8 +10,12 @@ import { Employee } from '@core/models';
 export class EmployeeService {
   #employeesApi = inject(EmployeeApiService);
   #employeeSignal = signal<Employee[]>([]);
-  filteredEmployeesSignal = signal<Employee[]>([]);
+  filteredEmployeesSignal = computed(() => this.filterByNameOrSurname());
 
+  #searchQuery = signal('');
+  setFilter(query: string) {
+    this.#searchQuery.set(query);
+  }
   loading = signal(false);
 
   constructor() {
@@ -31,7 +35,6 @@ export class EmployeeService {
           const employeesSlice = employees.splice(0, 20);
           // console.table(employeesSlice);
           this.#employeeSignal.set(employeesSlice);
-          this.filteredEmployeesSignal.set(employeesSlice);
         },
         error: (error: Error) => {
           console.error('Cannot load employees', error);
@@ -39,23 +42,25 @@ export class EmployeeService {
       });
   }
 
-  filterByNameOrSurname(search: string) {
-    if (!search) {
-      return;
+  filterByNameOrSurname() {
+    if (!this.#searchQuery()) {
+      return this.#employeeSignal();
     }
 
-    this.filteredEmployeesSignal.set(
-      this.filteredEmployeesSignal().filter(
-        (employee) =>
-          employee.name.toLowerCase().includes(search.toLowerCase()) ||
-          employee.surname.toLowerCase().includes(search.toLowerCase())
-      )
+    return this.#employeeSignal().filter(
+      (employee) =>
+        employee.name
+          .toLowerCase()
+          .includes(this.#searchQuery().toLowerCase()) ||
+        employee.surname
+          .toLowerCase()
+          .includes(this.#searchQuery().toLowerCase())
     );
   }
 
   resetFilter() {
     this.loading.set(true);
-    this.filteredEmployeesSignal.set(this.#employeeSignal());
+    this.setFilter('');
     this.loading.set(false);
   }
 }

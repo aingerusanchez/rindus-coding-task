@@ -39,10 +39,14 @@
       }
     }
 
-    .name {
+    .summary {
       margin: 8px auto;
       display: flex;
       justify-content: center;
+
+      .age {
+        margin: 0 4px;
+      }
     }
   }
 
