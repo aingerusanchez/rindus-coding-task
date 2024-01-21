@@ -1,14 +1,18 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
 // RxJs
-import { finalize, first } from 'rxjs';
+import { Observable, finalize, first } from 'rxjs';
 // Services
 import { EmployeeApiService } from '@core/services/employee-api/employee-api.service';
+import { NotificationsService } from '@shared/services/notifications-service.service';
 // Models
-import { Employee } from '@core/models';
+import { Employee, fullName } from '@core/models';
+import { MatDialogData } from '@shared/components/dialog/dialog.component';
 
 @Injectable()
 export class EmployeeService {
   #employeesApi = inject(EmployeeApiService);
+  #notificationsService = inject(NotificationsService);
+
   #employeeSignal = signal<Employee[]>([]);
   filteredEmployeesSignal = computed(() => this.filterByNameOrSurname());
 
@@ -84,6 +88,16 @@ export class EmployeeService {
   }
 
   delete(employeeToDelete: Employee) {
+    this.deleteConfirm(employeeToDelete)
+      .pipe(first())
+      .subscribe((confirmation: boolean) => {
+        if (!confirmation) return;
+
+        this.performDelete(employeeToDelete);
+      });
+  }
+
+  private performDelete(employeeToDelete: Employee) {
     const index = this.#employeeSignal().findIndex(
       (emp: Employee) => emp.id === employeeToDelete.id
     );
@@ -94,5 +108,16 @@ export class EmployeeService {
         return [...employees];
       });
     }
+  }
+
+  private deleteConfirm(employee: Employee): Observable<boolean> {
+    const confirmData: MatDialogData = {
+      title: 'Delete employee?',
+      message: `Are you sure you want to delete ${fullName(employee)}?`,
+      buttonOk: 'Delete',
+      buttonCancel: 'Cancel',
+    };
+
+    return this.#notificationsService.openDialog(confirmData);
   }
 }

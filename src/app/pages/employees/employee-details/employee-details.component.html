@@ -24,6 +24,7 @@
       <input #nameInput matInput formControlName="name" placeholder="John" />
       <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
       <mat-icon matSuffix>
+        <!-- todo: fix -->
         {{
           name?.invalid && name?.touched
             ? "sentiment_very_satisfied"
@@ -44,6 +45,7 @@
         placeholder="Doe"
       />
       <mat-icon matSuffix>
+        <!-- todo: fix -->
         {{
           surnameInput.value.length > nameMinChars &&
           surnameInput.value.length < nameMaxChars
