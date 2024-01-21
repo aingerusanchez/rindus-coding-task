@@ -16,14 +16,16 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+// Services
+import { EmployeeService } from '../employee.service';
 // Environment
 import { environment as env } from '@env/environment';
 // Models
 import { Employee, Position, fullName } from '@core/models';
 // Pipes
-import { AgePipe } from '@shared/pipes/age.pipe';
-import { EmployeeService } from '../employee.service';
-import { capitalize } from '../../../shared/utils/string.utils';
+import { AgePipe, FullNamePipe } from '@shared/pipes';
+// Utils
+import { capitalize } from '@shared/utils/string.utils';
 
 interface EmployeeForm {
   name: FormControl<string | null>;
@@ -49,6 +51,7 @@ interface EmployeeForm {
     MatIconModule,
     // Pipes
     AgePipe,
+    FullNamePipe,
   ],
   templateUrl: './employee-details.component.html',
   styleUrl: './employee-details.component.scss',

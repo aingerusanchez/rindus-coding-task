@@ -4,15 +4,13 @@
       <img [src]="employee.avatar" alt="Employee picture" />
     </div>
     <h2 class="summary">
-      <!-- {{
-        name?.value
-          ? (fullName(formEmployee.value) | titlecase)
-          : "New employee "
+      {{
+        name?.value ? ($any(formEmployee.value) | fullName) : "New employee "
       }}
 
-      @if (birthDate?.value && (birthDate?.value | age)) {
-      <span class="age"> ({{ birthDate?.value | age }}) </span>
-      } -->
+      @if (birthDate?.value && ($any(birthDate?.value) | age)) {
+      <span class="age"> ({{ $any(birthDate?.value) | age }}) </span>
+      }
     </h2>
   </section>
 

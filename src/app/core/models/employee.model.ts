@@ -17,6 +17,6 @@ export interface Employee {
   altPos?: string;
 }
 
-export function fullName(employee: Partial<Employee>): string {
-  return `${employee.name} ${employee.surname}`;
+export function fullName({ name, surname }: Partial<Employee>): string {
+  return `${name} ${surname}`;
 }
