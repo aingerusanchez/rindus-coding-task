@@ -100,7 +100,6 @@ export class EmployeeDetailsComponent {
     // Load employee data
     this.employee =
       inject(Router).getCurrentNavigation()?.extras.state?.['employee'];
-    console.log('employee: ', this.employee);
 
     if (this.employee?.id > -1) {
       this.formEmployee.patchValue(this.employee);
@@ -133,7 +132,6 @@ export class EmployeeDetailsComponent {
       altPos: altPos!,
       avatar: this.employee.avatar,
     };
-    console.log('Employee form: ', employee);
 
     if (this.employee.id > -1) {
       // Update existing employee

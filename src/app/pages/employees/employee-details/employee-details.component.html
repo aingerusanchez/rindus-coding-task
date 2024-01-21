@@ -18,8 +18,8 @@
 
   <form [formGroup]="formEmployee" (ngSubmit)="onSubmit()">
     <mat-form-field appearance="outline">
-      <mat-label for="name"> Name </mat-label>
-      <input #nameInput matInput formControlName="name" placeholder="John" />
+      <mat-label for="nameId"> Name </mat-label>
+      <input matInput id="nameId" formControlName="name" placeholder="John" />
       <mat-icon matSuffix>
         {{
           name?.invalid && name?.touched
@@ -33,10 +33,10 @@
       >
     </mat-form-field>
     <mat-form-field appearance="outline">
-      <mat-label for="surname"> Surname </mat-label>
+      <mat-label for="surnameId"> Surname </mat-label>
       <input
-        #surnameInput
         matInput
+        id="surnameId"
         formControlName="surname"
         placeholder="Smith"
       />
@@ -53,12 +53,17 @@
       >
     </mat-form-field>
     <mat-form-field appearance="outline">
-      <mat-label for="birthDate"> Birthdate </mat-label>
-      <input matInput formControlName="birthDate" placeholder="DD/MM/YYYY" />
+      <mat-label for="birthDateId"> Birthdate </mat-label>
+      <input
+        matInput
+        id="birthDateId"
+        formControlName="birthDate"
+        placeholder="DD/MM/YYYY"
+      />
     </mat-form-field>
     <mat-form-field appearance="outline">
-      <mat-label for="position"> Position </mat-label>
-      <mat-select formControlName="position">
+      <mat-label for="positionId"> Position </mat-label>
+      <mat-select formControlName="position" id="positionId">
         @for (position of positionOptions; track $index) {
         <mat-option [value]="position">
           {{ position | titlecase }}
@@ -66,6 +71,17 @@
         }
       </mat-select>
     </mat-form-field>
+    @if(position?.value === "Other") {
+    <mat-form-field appearance="outline">
+      <mat-label for="altPos"> Specify position </mat-label>
+      <input
+        matInput
+        id="altPosId"
+        formControlName="altPos"
+        placeholder="Intern"
+      />
+    </mat-form-field>
+    }
 
     <div class="form-buttons">
       <button
