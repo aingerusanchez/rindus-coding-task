@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  inject,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 // Angular Material
@@ -57,7 +62,7 @@ interface EmployeeForm {
   styleUrl: './employee-details.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EmployeeDetailsComponent {
+export class EmployeeDetailsComponent implements OnInit {
   private employeeService = inject(EmployeeService);
   private router = inject(Router);
   fullName = fullName;
@@ -72,13 +77,21 @@ export class EmployeeDetailsComponent {
     Validators.maxLength(this.nameMaxChars),
   ];
 
-  formEmployee: FormGroup<EmployeeForm> = this.fb.group({
-    name: ['', [...this.nameValidators]],
-    surname: ['', [...this.nameValidators]],
-    birthDate: ['', Validators.required],
-    position: [env.employeeForm.position.options[0], Validators.required],
-    altPos: [''],
-  });
+  formEmployee: FormGroup<EmployeeForm> = this.fb.group(
+    {
+      name: ['', [...this.nameValidators]],
+      surname: ['', [...this.nameValidators]],
+      birthDate: ['', Validators.required],
+      position: [env.employeeForm.position.options[0], Validators.required],
+      altPos: [
+        '',
+        // requiredIfValidator(
+        //   () => this.formEmployee.get('position')?.value === 'Other'
+        // ),
+      ],
+    },
+    { updateOn: 'blur' }
+  );
 
   get name() {
     return this.formEmployee.get('name');
@@ -94,6 +107,10 @@ export class EmployeeDetailsComponent {
 
   get position() {
     return this.formEmployee.get('position');
+  }
+
+  get altPos() {
+    return this.formEmployee.get('altPos');
   }
 
   constructor(private fb: FormBuilder) {
@@ -115,6 +132,10 @@ export class EmployeeDetailsComponent {
         avatar: 'assets/images/avatar.svg',
       };
     }
+  }
+
+  ngOnInit() {
+    this.listenToPositionChanges();
   }
 
   onSubmit() {
@@ -142,4 +163,39 @@ export class EmployeeDetailsComponent {
     }
     this.router.navigate(['employees']);
   }
+
+  private listenToPositionChanges() {
+    this.position?.valueChanges.subscribe((position) => {
+      if (position === 'Other') {
+        // Make altPos required
+        this.altPos?.setValidators([Validators.required]);
+      } else {
+        // Make altPos optional
+        this.altPos?.hasValidator(Validators.required) ??
+          this.altPos?.clearValidators();
+        // Reset altPos value
+        this.formEmployee.get('altPos')?.reset();
+      }
+      this.altPos?.updateValueAndValidity({ onlySelf: true, emitEvent: false });
+    });
+  }
 }
+
+// function requireIfPositionIsOther(formControl: AbstractControl) {
+//   if (!formControl.parent) return null;
+//   if (formControl.parent.get('position')?.value !== 'Other') return null;
+
+//   return Validators.required(formControl);
+// }
+
+// function requiredIfValidator(predicate: () => boolean) {
+//   return (formControl: AbstractControl) => {
+//     if (!formControl.parent) {
+//       return null;
+//     }
+//     if (predicate()) {
+//       return Validators.required(formControl);
+//     }
+//     return null;
+//   };
+// }
