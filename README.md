@@ -34,5 +34,9 @@ Develop an Employee Management Angular App with the following functionalities:
 
 ### Nice to have features
 
-- Simulate data delay: Both role options ([user,admin]) and the position options ([junior, senior, other]) should simulate a data load delay of 300ms from the backend. This would not require data storage.
+- ✅ Simulate data delay: Both role options ([user,admin]) and the position options ([junior, senior, other]) should simulate a data load delay of 300ms from the backend. This would not require data storage.
+
+  > [!NOTE]
+  > There is a property in environments (`env.simulatedDelayMs`) setting delay time.
+
 - Write tests: If possible, create unit tests to validate the app’s functionalities.
