@@ -84,7 +84,10 @@ export class EmployeeDetailsComponent implements OnInit {
   ).pipe(
     tap(() => this.loading.set(true)),
     delay(env.simulatedDelayMs),
-    finalize(() => this.loading.set(false))
+    finalize(() => {
+      this.position?.enable();
+      this.loading.set(false);
+    })
   );
   dateConfig: { format: string; mask: string } = env.employeeForm.date;
 
@@ -110,7 +113,7 @@ export class EmployeeDetailsComponent implements OnInit {
       name: ['', [...this.nameValidators]],
       surname: ['', [...this.nameValidators]],
       birthDate: ['', Validators.required],
-      position: [env.employeeForm.position.options[0], Validators.required],
+      position: [{ value: '', disabled: true }, Validators.required],
       altPos: [
         '',
         // requiredIfValidator(

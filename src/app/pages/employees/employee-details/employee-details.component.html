@@ -67,7 +67,7 @@
       @if(loading()) {
       <mat-label for="positionId" class="loading-options">
         <mat-spinner diameter="20"></mat-spinner>
-        Loading positions...
+        {{ position?.value || "Loading positions..." }}
       </mat-label>
       } @else {
       <mat-label for="positionId"> Position </mat-label>
