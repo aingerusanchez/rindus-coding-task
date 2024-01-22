@@ -21,6 +21,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+// Ngx-mask
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 // Services
 import { EmployeeService } from '../employee.service';
 // Environment
@@ -57,19 +59,23 @@ interface EmployeeForm {
     // Pipes
     AgePipe,
     FullNamePipe,
+    // Ngx-mask
+    NgxMaskDirective,
   ],
   templateUrl: './employee-details.component.html',
   styleUrl: './employee-details.component.scss',
+  providers: [provideNgxMask()],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EmployeeDetailsComponent implements OnInit {
   private employeeService = inject(EmployeeService);
   private router = inject(Router);
+  employee: Employee;
   fullName = fullName;
   nameMinChars = env.employeeForm.name.minChars;
   nameMaxChars = env.employeeForm.name.maxChars;
   positionOptions: string[] = env.employeeForm.position.options;
-  employee: Employee;
+  dateConfig: { format: string; mask: string } = env.employeeForm.date;
 
   nameValidators = [
     Validators.required,
@@ -139,6 +145,7 @@ export class EmployeeDetailsComponent implements OnInit {
   }
 
   onSubmit() {
+    this.formEmployee.updateValueAndValidity();
     if (this.formEmployee.invalid) return;
 
     const { name, surname, birthDate, position, altPos } =

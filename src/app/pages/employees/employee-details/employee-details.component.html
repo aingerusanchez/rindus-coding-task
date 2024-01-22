@@ -58,7 +58,11 @@
         matInput
         id="birthDateId"
         formControlName="birthDate"
-        placeholder="DD/MM/YYYY"
+        [placeholder]="dateConfig.format"
+        [mask]="dateConfig.mask"
+        [showMaskTyped]="true"
+        [validation]="true"
+        [dropSpecialCharacters]="false"
       />
     </mat-form-field>
     <mat-form-field appearance="outline">
@@ -84,14 +88,7 @@
     }
 
     <div class="form-buttons">
-      <button
-        mat-raised-button
-        color="accent"
-        type="submit"
-        [disabled]="formEmployee.invalid"
-      >
-        Save
-      </button>
+      <button mat-raised-button color="accent" type="submit">Save</button>
     </div>
   </form>
 </mat-card>

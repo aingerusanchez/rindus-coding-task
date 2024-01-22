@@ -10,5 +10,9 @@ export const environment = {
     position: {
       options: ['Junior', 'Senior', 'Other'],
     },
+    date: {
+      format: 'DD/MM/YYYY',
+      mask: '00/00/0000',
+    },
   },
 };
