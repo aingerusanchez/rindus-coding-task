@@ -3,9 +3,11 @@ import {
   Component,
   OnInit,
   inject,
+  signal,
 } from '@angular/core';
 import { CommonModule, Location } from '@angular/common';
 import { Router } from '@angular/router';
+import { Observable, delay, finalize, of, tap } from 'rxjs';
 // Angular Material
 import { MatCardModule } from '@angular/material/card';
 import {
@@ -21,6 +23,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 // Ngx-mask
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 // Services
@@ -56,6 +59,7 @@ interface EmployeeForm {
     MatSelectModule,
     MatButtonModule,
     MatIconModule,
+    MatProgressSpinner,
     // Pipes
     AgePipe,
     FullNamePipe,
@@ -74,7 +78,14 @@ export class EmployeeDetailsComponent implements OnInit {
   fullName = fullName;
   nameMinChars = env.employeeForm.name.minChars;
   nameMaxChars = env.employeeForm.name.maxChars;
-  positionOptions: string[] = env.employeeForm.position.options;
+  loading = signal(false);
+  positionOptions$: Observable<string[]> = of(
+    env.employeeForm.position.options
+  ).pipe(
+    tap(() => this.loading.set(true)),
+    delay(env.simulatedDelayMs),
+    finalize(() => this.loading.set(false))
+  );
   dateConfig: { format: string; mask: string } = env.employeeForm.date;
 
   employee: Employee = {
@@ -83,7 +94,7 @@ export class EmployeeDetailsComponent implements OnInit {
     surname: '',
     email: '',
     birthDate: '',
-    position: this.positionOptions[0] as Position,
+    position: '' as Position,
     altPos: '',
     avatar: 'assets/images/avatar.svg',
   };

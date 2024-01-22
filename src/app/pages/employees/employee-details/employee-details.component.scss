@@ -58,6 +58,11 @@
     justify-content: center;
     gap: 1rem;
 
+    .loading-options {
+      display: flex;
+      gap: 1rem;
+    }
+
     mat-form-field {
       width: max(300px, 48%);
     }
