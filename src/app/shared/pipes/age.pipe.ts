@@ -5,11 +5,15 @@ import { Pipe, PipeTransform } from '@angular/core';
   standalone: true,
 })
 export class AgePipe implements PipeTransform {
-  transform(value?: string /* , ...args: unknown[] */): string {
-    if (!value) return '';
+  transform(birthDateString?: string /* , ...args: unknown[] */): string {
+    if (!birthDateString) return '';
 
     const today = new Date();
-    const birthDate = new Date(value);
+    const birthDate = transformDateFormats(
+      birthDateString,
+      DateFormat.EUR,
+      DateFormat.USA
+    );
     let age = today.getFullYear() - birthDate.getFullYear();
     const monthDiff = today.getMonth() - birthDate.getMonth();
     if (
@@ -19,10 +23,32 @@ export class AgePipe implements PipeTransform {
       age--;
     }
     if (Number.isNaN(age)) {
-      console.error('Malformed date, can`t calculate age', value);
+      console.error('Malformed date, can`t calculate age', birthDateString);
       return '';
     } else {
       return age.toString();
     }
   }
+}
+
+export enum DateFormat {
+  EUR, // DD/MM/YYYY
+  USA, // MM/DD/YYYY
+  ISO, // YYYY-MM-DD
+}
+
+function transformDateFormats(
+  date: string,
+  inputFormat: DateFormat,
+  outputFormat: DateFormat
+): Date {
+  if (inputFormat === DateFormat.EUR && outputFormat === DateFormat.USA) {
+    const dateFragments = date.split('/');
+    const day = parseInt(dateFragments[0], 10);
+    const month = parseInt(dateFragments[1], 10) - 1;
+    const year = parseInt(dateFragments[2], 10);
+
+    return new Date(year, month, day);
+  }
+  return new Date();
 }
