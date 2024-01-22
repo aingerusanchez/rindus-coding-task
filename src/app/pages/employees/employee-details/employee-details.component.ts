@@ -189,6 +189,10 @@ export class EmployeeDetailsComponent implements OnInit {
     this.router.navigate(['employees']);
   }
 
+  goBack() {
+    this.router.navigate(['employees']);
+  }
+
   private listenToPositionChanges() {
     this.position?.valueChanges.subscribe((position) => {
       if (position === 'Other') {

@@ -79,9 +79,14 @@
       width: 100%;
       display: flex;
       justify-content: center;
+      justify-content: space-around;
 
       button {
         width: min(300px, 100%);
+      }
+
+      button[type="button"] {
+        background: var(--surface);
       }
     }
   }
