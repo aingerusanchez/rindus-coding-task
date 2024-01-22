@@ -5,6 +5,7 @@
   max-width: 1024px;
   margin: auto;
   padding: 24px;
+  margin-bottom: 2rem;
 
   @media screen and (max-width: 400px) {
     padding: 16px;
@@ -26,7 +27,6 @@ app-search-bar {
 }
 
 table[mat-table] {
-  margin-bottom: 2rem;
   background: transparent;
   border-radius: 8px;
 
@@ -99,6 +99,10 @@ table[mat-table] {
   padding: 32px 0;
   background: transparent;
   margin-bottom: 12px;
+}
+
+.empty-card {
+  @extend .center;
 }
 
 mat-paginator {

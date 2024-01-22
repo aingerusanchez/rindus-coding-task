@@ -81,9 +81,12 @@
   <mat-progress-spinner color="primary" mode="indeterminate">
   </mat-progress-spinner>
 </mat-card>
+} @else if (!employeesDataSource().data.length) {
+<mat-card class="empty-card">
+  <h1>No coincidences</h1>
+  <p>Check filtered text or refresh data.</p>
+</mat-card>
 }
-<!-- itemsPerPage(): {{ itemsPerPage() }} <br /> -->
-<!-- currentPage(): {{ currentPage() }} -->
 
 <!-- <mat-paginator
   [pageSize]="itemsPerPage()"
