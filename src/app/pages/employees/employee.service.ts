@@ -3,7 +3,7 @@ import { Injectable, computed, inject, signal } from '@angular/core';
 import { Observable, finalize, first } from 'rxjs';
 // Services
 import { EmployeeApiService } from '@core/services/employee-api/employee-api.service';
-import { NotificationsService } from '@shared/services/notifications-service.service';
+import { NotificationsService } from '@shared/services/notifications/notifications-service.service';
 // Models
 import { Employee, fullName } from '@core/models';
 import { MatDialogData } from '@shared/components/dialog/dialog.component';

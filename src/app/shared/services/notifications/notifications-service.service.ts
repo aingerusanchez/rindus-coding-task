@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 import {
   DialogComponent,
   MatDialogData,
-} from '../components/dialog/dialog.component';
+} from '../../components/dialog/dialog.component';
 
 @Injectable({ providedIn: 'root' })
 export class NotificationsService {
