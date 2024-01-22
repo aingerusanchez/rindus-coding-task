@@ -4,7 +4,7 @@ import {
   OnInit,
   inject,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { Router } from '@angular/router';
 // Angular Material
 import { MatCardModule } from '@angular/material/card';
@@ -70,12 +70,23 @@ interface EmployeeForm {
 export class EmployeeDetailsComponent implements OnInit {
   private employeeService = inject(EmployeeService);
   private router = inject(Router);
-  employee: Employee;
+
   fullName = fullName;
   nameMinChars = env.employeeForm.name.minChars;
   nameMaxChars = env.employeeForm.name.maxChars;
   positionOptions: string[] = env.employeeForm.position.options;
   dateConfig: { format: string; mask: string } = env.employeeForm.date;
+
+  employee: Employee = {
+    id: -1,
+    name: '',
+    surname: '',
+    email: '',
+    birthDate: '',
+    position: this.positionOptions[0] as Position,
+    altPos: '',
+    avatar: 'assets/images/avatar.svg',
+  };
 
   nameValidators = [
     Validators.required,
@@ -120,23 +131,16 @@ export class EmployeeDetailsComponent implements OnInit {
   }
 
   constructor(private fb: FormBuilder) {
-    // Load employee data
-    this.employee =
+    // Load employee data from state
+    const employee =
       inject(Router).getCurrentNavigation()?.extras.state?.['employee'];
 
-    if (this.employee?.id > -1) {
-      this.formEmployee.patchValue(this.employee);
+    if (employee?.id > -1) {
+      this.formEmployee.patchValue(employee);
+      this.employee = employee;
     } else {
-      this.employee = {
-        id: -1,
-        name: '',
-        surname: '',
-        email: '',
-        birthDate: '',
-        position: this.positionOptions[0] as Position,
-        altPos: '',
-        avatar: 'assets/images/avatar.svg',
-      };
+      // Remove employee id from url
+      inject(Location).replaceState('/employees/-1');
     }
   }
 

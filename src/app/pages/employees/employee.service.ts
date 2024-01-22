@@ -68,6 +68,12 @@ export class EmployeeService {
     this.loading.set(false);
   }
 
+  getEmployeeById(id: string): Employee | undefined {
+    return this.#employeeSignal().find(
+      (employee: Employee) => employee.id === +id
+    );
+  }
+
   create(newEmployee: Employee) {
     newEmployee.id = this.#employeeSignal().length + 1;
 
