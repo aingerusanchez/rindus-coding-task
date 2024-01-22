@@ -1,6 +1,3 @@
-@use "sass:map";
-@use "@angular/material" as mat;
-
 :host {
   display: grid;
   place-items: center;
@@ -19,6 +16,13 @@ mat-card {
   }
 
   mat-card-content {
+    .loading-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
     mat-button-toggle-group {
       width: 100%;
 

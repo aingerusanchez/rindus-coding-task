@@ -5,6 +5,12 @@
       <mat-card-subtitle>Select your employee role</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
+      @if (loading()) {
+      <div class="loading-container">
+        <mat-spinner></mat-spinner>
+        <p>Loading roles...</p>
+      </div>
+      } @else {
       <mat-button-toggle-group
         [(ngModel)]="userRole"
         name="roleSelector"
@@ -30,6 +36,7 @@
           Enter
         </button>
       </div>
+      }
     </mat-card-content>
   </mat-card>
 </section>

@@ -1,9 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  signal,
+} from '@angular/core';
 import { Router } from '@angular/router';
 // Angular Material
 import { MatCardModule } from '@angular/material/card';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -19,6 +25,7 @@ import { Role } from '@core/models';
     CommonModule,
     FormsModule,
     MatCardModule,
+    MatProgressSpinnerModule,
     MatButtonToggleModule,
     MatButtonModule,
     MatIconModule,
@@ -32,6 +39,13 @@ export class RoleSelectorComponent {
   #router = inject(Router);
 
   userRole: Role = 'user';
+  loading = signal(true);
+
+  constructor() {
+    setTimeout(() => {
+      this.loading.set(false);
+    }, 300);
+  }
 
   enter() {
     if (!this.userRole) return;
