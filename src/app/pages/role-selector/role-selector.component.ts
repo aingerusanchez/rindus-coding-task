@@ -17,6 +17,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { RoleService } from '@core/services/role/role.service';
 // Models
 import { Role } from '@core/models';
+// Environment
+import { environment as env } from '@env/environment';
 
 @Component({
   selector: 'app-role-selector',
@@ -44,7 +46,7 @@ export class RoleSelectorComponent {
   constructor() {
     setTimeout(() => {
       this.loading.set(false);
-    }, 300);
+    }, env.simulatedDelayMs);
   }
 
   enter() {

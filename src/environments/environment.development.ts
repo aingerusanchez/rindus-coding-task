@@ -15,4 +15,5 @@ export const environment = {
       mask: '00/00/0000',
     },
   },
+  simulatedDelayMs: 300,
 };

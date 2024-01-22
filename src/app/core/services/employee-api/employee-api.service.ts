@@ -5,8 +5,8 @@ import { Observable, delay, map, of } from 'rxjs';
 import { MOCK_DATA } from './employee-mock.data';
 // Models
 import { Employee } from '@core/models';
-
-const LOADING_TIME_MILI_SECONDS = 3000;
+// Environment
+import { environment as env } from '@env/environment';
 
 @Injectable()
 export class EmployeeApiService {
@@ -20,7 +20,7 @@ export class EmployeeApiService {
   getAll(): Observable<Employee[]> {
     // Simulates data fetch from backend
     return of(MOCK_DATA).pipe(
-      delay(LOADING_TIME_MILI_SECONDS),
+      delay(env.simulatedDelayMs),
       // Adapt each employee avatar to other api
       map((employees: Employee[]) =>
         employees.map((employee: Employee) => ({
