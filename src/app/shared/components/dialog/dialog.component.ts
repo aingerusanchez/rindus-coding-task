@@ -31,7 +31,7 @@ export interface MatDialogData {
   template: `
     <h2 mat-dialog-title>{{ data.title }}</h2>
     <div mat-dialog-content>{{ data.message }}</div>
-    <div mat-dialog-actions>
+    <div mat-dialog-actions align="end">
       <button mat-button mat-dialog-close (click)="cancel()">
         {{ data.buttonCancel }}
       </button>
