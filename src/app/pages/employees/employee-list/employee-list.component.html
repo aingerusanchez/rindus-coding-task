@@ -1,6 +1,6 @@
 <app-search-bar
   #searchbar
-  placeholder="Search by name or username"
+  placeholder="Search by name or surname"
   [hint]="searchHint()"
   [ngClass]="{ bm: !roleService.isAdmin() }"
   (type)="onSearchChange($event)"
