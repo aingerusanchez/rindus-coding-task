@@ -200,8 +200,10 @@ export class EmployeeDetailsComponent implements OnInit {
         this.altPos?.setValidators([Validators.required]);
       } else {
         // Make altPos optional
-        this.altPos?.hasValidator(Validators.required) ??
-          this.altPos?.clearValidators();
+        this.altPos?.hasValidator(Validators.required) &&
+          this.formEmployee
+            .get('altPos')
+            ?.removeValidators(Validators.required);
         // Reset altPos value
         this.formEmployee.get('altPos')?.reset();
       }
