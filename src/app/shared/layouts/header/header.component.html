@@ -1,9 +1,11 @@
 <mat-toolbar color="primary">
   <h1>{{ title }}</h1>
+  @if(role()) {
   <div class="right-buttons">
     <p>{{ role() | titlecase }}</p>
     <button mat-icon-button (click)="logout.emit()" aria-label="Change role">
       <mat-icon>logout</mat-icon>
     </button>
   </div>
+  }
 </mat-toolbar>
