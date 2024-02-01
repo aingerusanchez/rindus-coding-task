@@ -114,12 +114,7 @@ export class EmployeeDetailsComponent implements OnInit {
       surname: ['', [...this.nameValidators]],
       birthDate: ['', Validators.required],
       position: [{ value: '', disabled: true }, Validators.required],
-      altPos: [
-        '',
-        // requiredIfValidator(
-        //   () => this.formEmployee.get('position')?.value === 'Other'
-        // ),
-      ],
+      altPos: [''],
     },
     { updateOn: 'blur' }
   );
@@ -196,14 +191,12 @@ export class EmployeeDetailsComponent implements OnInit {
   private listenToPositionChanges() {
     this.position?.valueChanges.subscribe((position) => {
       if (position === 'Other') {
-        // Make altPos required
+        // Enable altPos making it required
         this.altPos?.setValidators([Validators.required]);
+        this.altPos?.enable();
       } else {
-        // Make altPos optional
-        this.altPos?.hasValidator(Validators.required) &&
-          this.formEmployee
-            .get('altPos')
-            ?.removeValidators(Validators.required);
+        // Disable altPos, making it optional
+        this.altPos?.disable();
         // Reset altPos value
         this.formEmployee.get('altPos')?.reset();
       }
@@ -211,22 +204,3 @@ export class EmployeeDetailsComponent implements OnInit {
     });
   }
 }
-
-// function requireIfPositionIsOther(formControl: AbstractControl) {
-//   if (!formControl.parent) return null;
-//   if (formControl.parent.get('position')?.value !== 'Other') return null;
-
-//   return Validators.required(formControl);
-// }
-
-// function requiredIfValidator(predicate: () => boolean) {
-//   return (formControl: AbstractControl) => {
-//     if (!formControl.parent) {
-//       return null;
-//     }
-//     if (predicate()) {
-//       return Validators.required(formControl);
-//     }
-//     return null;
-//   };
-// }
