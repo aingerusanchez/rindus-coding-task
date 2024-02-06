@@ -33,7 +33,6 @@ export class RoleService {
 
     if (role === 'user' || role === 'admin') {
       this.role.set(role as Role);
-      // this.#router.navigateByUrl('employee-list');
     }
   }
 }
