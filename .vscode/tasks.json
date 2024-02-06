@@ -6,6 +6,9 @@
       "type": "npm",
       "script": "start",
       "isBackground": true,
+      "runOptions": {
+        "runOn": "folderOpen"
+      },
       "problemMatcher": {
         "owner": "typescript",
         "pattern": "$tsc",
