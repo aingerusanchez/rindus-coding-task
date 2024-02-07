@@ -30,8 +30,8 @@ export const MOCK_DATA: Employee[] = [
     surname: 'Spearing',
     email: 'mspearing2@1688.com',
     birthDate: '26/07/1951',
-    position: 'Senior',
-    altPos: '',
+    position: 'Other',
+    altPos: 'Intern',
   },
   {
     id: 4,
