@@ -64,7 +64,7 @@ export class EmployeeListComponent implements OnInit {
   // @ViewChild(MatPaginator) paginator!: MatPaginator;
   // @ViewChild(MatSort) sort!: MatSort;
 
-  searchHint = signal('Enter at least 3 characters');
+  searchHint: string = 'Enter at least 3 characters';
   #employees = this.employeesService.filteredEmployeesSignal;
   employeesDataSource = computed(
     () => new MatTableDataSource<Employee>(this.#employees())
@@ -94,13 +94,13 @@ export class EmployeeListComponent implements OnInit {
     const searchText = query.trim().length;
     // Search text must have at least ${SEARCH_MIN_CHARS} characters
     if (searchText < SEARCH_MIN_CHARS) {
-      this.searchHint.set(`Enter at least ${SEARCH_MIN_CHARS} characters`);
+      this.searchHint = `Enter at least ${SEARCH_MIN_CHARS} characters`;
       // Clean filtered data
       this.employeesService.resetFilter();
       return;
     }
 
-    this.searchHint.set('');
+    this.searchHint = '';
     this.employeesService.setFilter(query);
   }
 
