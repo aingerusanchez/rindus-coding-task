@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { EmployeeDetailsComponent } from './employee-details.component';
 import { EmployeeService } from '../employee.service';
 import { EmployeeApiService } from '@core/services/employee-api/employee-api.service';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('EmployeeDetailsComponent', () => {
   let component: EmployeeDetailsComponent;
@@ -11,7 +11,7 @@ describe('EmployeeDetailsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [EmployeeDetailsComponent, BrowserAnimationsModule],
+      imports: [EmployeeDetailsComponent, NoopAnimationsModule],
       providers: [EmployeeService, EmployeeApiService],
     }).compileComponents();
 
